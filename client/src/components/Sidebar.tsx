@@ -53,7 +53,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [isActive, setisActive] = useState("dashboard");
   return (
-    <div className="hidden md:flex justify-between items-center sticky flex-col top-5 h-93vh">
+    <div className="sm:flex hidden justify-between items-center sticky flex-col top-5 h-93vh">
       <Link to={"/"}>
         <Icon
           styles="w-[52px] h-[52px] bg-[#2c2f32]"
