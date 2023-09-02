@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useStateContext } from "../context";
 import { calculateBarPercentage, daysLeft } from "../utils";
-import { CountBox, CustomButton } from "../components";
+import { CountBox, CustomButton, Loader } from "../components";
 import { thirdweb } from "../assets/assets";
 
 const CampaignDetails = () => {
   const { state } = useLocation();
   const { donate, getDonations, contract, address } = useStateContext();
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [amount, setAmount] = useState("");
   const [donators, setDonators] = useState([]);
@@ -26,12 +27,13 @@ const CampaignDetails = () => {
   const handleDonate = async () => {
     setIsLoading(true);
     await donate(state.pid, amount);
+    navigate("/");
     setIsLoading(false);
   };
 
   return (
     <div>
-      {isLoading && "loading..."}
+      {isLoading && <Loader />}
       <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
         <div className="flex-1 flex-col">
           <img
@@ -121,7 +123,7 @@ const CampaignDetails = () => {
             </h4>
             <div className="mt-[20px] flex flex-col gap-4">
               {donators.length > 0 ? (
-                donators.map((item, index) => (
+                donators.map((item: any, index) => (
                   <div
                     key={`${item.donator}-${index}`}
                     className="flex justify-between items-center gap-4"
