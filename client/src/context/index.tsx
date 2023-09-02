@@ -4,7 +4,9 @@ import {
   useAddress,
   useMetamask,
   useContractWrite,
+  useLogout,
 } from "@thirdweb-dev/react/evm";
+
 import { ethers } from "ethers";
 
 interface StateContextType {
@@ -99,9 +101,9 @@ export const StateContextProvider: React.FC<Props> = ({ children }) => {
     return filteredCampaigns;
   };
 
-  const donate = async (pId: number, amount: string) => {
+  const donate = async (_id: number, amount: string) => {
     if (contract) {
-      const data = await contract.call("donateToCampaign", address, {
+      const data = await contract.call("donateToCampaign", [_id], {
         value: ethers.utils.parseEther(amount),
       });
 

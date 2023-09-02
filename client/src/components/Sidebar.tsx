@@ -27,14 +27,20 @@ const Icon: React.FC<IconProps> = ({
   disabled,
   handleClick,
 }) => {
+  // const [showTooltip, setShowTooltip] = useState(false);
+
   return (
     <div
-      className={`w-[48px] h-[48px] rounded-[10px] ${
+      className={`w-[48px] h-[48px] rounded-[10px]  ${
         isActive && isActive === name && "bg-[#2c2f32]"
       } flex justify-center items-center ${
         !disabled && "cursor-pointer"
       } ${styles}`}
       onClick={handleClick}
+      // onMouseEnter={() => {
+      //   setShowTooltip(true);
+      // }}
+      // onMouseLeave={() => setShowTooltip(false)}
     >
       {!isActive ? (
         <img src={imageUrl} alt="fund_logo" className="w-1/2 h-1/2" />
@@ -45,6 +51,14 @@ const Icon: React.FC<IconProps> = ({
           className={`w-1/2 h-1/2 ${isActive !== name && "grayscale"}`}
         />
       )}
+      {/* {showTooltip && (
+        <div
+          className=" absolute bg-gray-800 text-white px-4 py-2 rounded "
+          style={{ right: "0px" }}
+        >
+          {name}
+        </div>
+      )} */}
     </div>
   );
 };
