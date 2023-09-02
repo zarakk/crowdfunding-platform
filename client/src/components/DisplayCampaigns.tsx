@@ -8,13 +8,14 @@ interface Campaign {
   length?: number;
   owner: string;
   deadline: Date;
-  pid: number;
+  id: number;
   image: string;
   target: string;
+  amountCollected: number;
 }
 interface CampaignProps {
   title: string;
-  campaigns: Campaign;
+  campaigns: Campaign[];
   isLoading: boolean;
 }
 
@@ -25,7 +26,7 @@ const DisplayCampaigns: React.FC<CampaignProps> = ({
 }) => {
   const navigate = useNavigate();
 
-  const handleNavigate = (campaign) => {
+  const handleNavigate = (campaign: Campaign) => {
     navigate(`/campaign-details/${campaign.title}`, { state: campaign });
   };
   return (

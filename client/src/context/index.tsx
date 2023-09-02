@@ -4,7 +4,6 @@ import {
   useAddress,
   useMetamask,
   useContractWrite,
-  useContractRead,
 } from "@thirdweb-dev/react/evm";
 import { ethers } from "ethers";
 
@@ -13,6 +12,10 @@ interface StateContextType {
   contract: any;
   createCampaign: (form: any) => void;
   connect: (connectOptions?: { chainId?: number }) => Promise<any>;
+  getUserCampaigns: any;
+  getCampaigns: any;
+  donate: any;
+  getDonations: any;
 }
 
 interface FormType {
@@ -31,6 +34,10 @@ const StateContext = createContext<StateContextType>({
   contract: undefined,
   createCampaign: () => {},
   connect: async () => Promise.resolve(undefined),
+  getCampaigns: async () => Promise.resolve(undefined),
+  getUserCampaigns: async () => Promise.resolve(undefined),
+  donate: async () => Promise.resolve(undefined),
+  getDonations: async () => Promise.resolve(undefined),
 });
 
 export const StateContextProvider: React.FC<Props> = ({ children }) => {
@@ -66,7 +73,7 @@ export const StateContextProvider: React.FC<Props> = ({ children }) => {
   const getCampaigns = async () => {
     const campaigns = await contract.call("getCampaigns");
 
-    const parsedCampaigns = campaigns.map((campaign, i) => ({
+    const parsedCampaigns = campaigns.map((campaign: any, i: any) => ({
       owner: campaign.owner,
       title: campaign.title,
       description: campaign.description,
@@ -78,7 +85,39 @@ export const StateContextProvider: React.FC<Props> = ({ children }) => {
       image: campaign.image,
       pid: i,
     }));
-    console.log(parsedCampaigns);
+    return parsedCampaigns;
+  };
+
+  const getUserCampaigns = async () => {
+    const allCampaigns = await getCampaigns();
+
+    const filteredCampaigns = allCampaigns.filter(
+      (campaign: any) => campaign.owner === address
+    );
+    return filteredCampaigns;
+  };
+
+  const donate = async (pId, amount) => {
+    const data = await contract.call("donateToCampaign", address, {
+      value: ethers.utils.parseEther(amount),
+    });
+
+    return data;
+  };
+
+  const getDonations = async (pId) => {
+    const donations = await contract.call("getDonators", pId);
+
+    const numberOfDonations = donations[0].length;
+    const parsedDonations = [];
+
+    for (let i = 0; i < numberOfDonations; i++) {
+      parsedDonations.push({
+        donator: donations[0][i],
+        donation: ethers.utils.formatEther(donations[1][i].toString()),
+      });
+    }
+    return parsedDonations;
   };
 
   return (
@@ -89,6 +128,9 @@ export const StateContextProvider: React.FC<Props> = ({ children }) => {
         contract,
         createCampaign: publishCampaign,
         getCampaigns,
+        getUserCampaigns,
+        donate,
+        getDonations,
       }}
     >
       {children}

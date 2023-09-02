@@ -2,7 +2,17 @@ import React from "react";
 import { daysLeft } from "../utils";
 import { tagType, thirdweb } from "../assets/assets";
 
-const FundCard = ({
+interface FundCardProps {
+  owner: string;
+  title: string;
+  deadline: Date;
+  amountCollected: number;
+  image: string;
+  description: string;
+  handleClick: () => void;
+  target: number;
+}
+const FundCard: React.FC<FundCardProps> = ({
   owner,
   title,
   deadline,
