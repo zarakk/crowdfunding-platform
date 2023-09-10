@@ -17,13 +17,10 @@ This is a Web3 crowdfunding platform built using React, TypeScript, Solidity, an
 - Tailwind CSS
 
 ## Create Campaign
-
-https://github.com/zarakk/crowdfunding-platform/assets/52151884/58d9c193-646d-4829-b6b3-347f22a571ef
-
+[Video Link](https://www.loom.com/share/3a6149e0f78d4877915896b2cc0ba7ab?sid=b179966c-9981-484e-92fc-93a727ed566c)
 ## Fund Campaign
 
-https://github.com/zarakk/crowdfunding-platform/assets/52151884/006f2355-90f3-4e0d-8d19-9bd65e6ec8a3
-
+[Video Link](https://www.loom.com/share/f3681fbe4f334e278a98f24f5334e467?sid=7b033a0f-1e1b-4255-81e8-1ca189f6289b)
 
 ## Getting Started
 
